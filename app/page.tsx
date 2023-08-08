@@ -1,18 +1,19 @@
 import { ITask } from '@/common/types/task';
 import axios, { AxiosResponse } from 'axios';
+import Home from '@/modules/home';
+import Navbar from '@/common/components/layouts/Navbar';
+import React from 'react';
 
-export default async function Home() {
-  const { data: tasks } = await getTask();
+// SSR
+export default async function HomePage() {
+  const { data } = await getTask();
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>Hello World!</h1>
-      {tasks.map((task) => (
-        <div key={task.id}>
-          <h2>{task.title}</h2>
-          <p>{task.content}</p>
-        </div>
-      ))}
-    </main>
+    <>
+      <Navbar />
+      <main className="flex flex-col min-h-screen items-center justify-between">
+        <Home tasks={data} />
+      </main>
+    </>
   );
 }
 
