@@ -19,9 +19,11 @@ export default async function HomePage() {
 
 // Server Fetching
 async function getTask(): Promise<{ status: number; data: ITask[] }> {
-  const response: AxiosResponse = await axios.get(
-    `${process.env.BASE_URL}/api/tasks`
-  );
+  const url =
+    process.env.NODE_ENV === 'development'
+      ? `${process.env.BASE_URL}/api/tasks`
+      : '/api/task';
+  const response: AxiosResponse = await axios.get(url);
   return {
     status: response.status,
     data: response.data.data,
