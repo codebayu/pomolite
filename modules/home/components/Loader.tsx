@@ -14,7 +14,7 @@ export default function Loader() {
     <div
       className={`flex justify-end w-full shadow-sm h-3 overflow-hidden rounded-full ${bg}`}
     >
-      <div className="bg-white h-3" style={{ width: `${progress}%` }} />
+      <div className="bg-gray-300 h-3" style={{ width: `${progress}%` }} />
     </div>
   );
 }

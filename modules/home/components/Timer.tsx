@@ -189,7 +189,7 @@ export default function Timer() {
   }, [state.timer]);
 
   return (
-    <div className="bg-white bg-opacity-10 flex flex-col w-full md:w-max md:min-w-[500px] space-y-10 items-center justify-center p-6 rounded-lg">
+    <div className="flex flex-col w-full md:w-max md:min-w-[500px] border border-gray-300 shadow-md space-y-10 items-center justify-center p-6 rounded-lg">
       <span>{renderStatus()} Session</span>
       <h2 className="text-8xl font-bold">
         {'    '}

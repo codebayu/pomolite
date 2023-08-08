@@ -67,7 +67,7 @@ export default function PhaseInfo() {
   }
 
   return (
-    <div className="bg-white flex flex-col w-full md:w-max md:min-w-[500px] shadow-lg bg-opacity-80 text-sm p-6 text-gray-500 rounded-lg">
+    <div className="bg-white flex flex-col w-full md:w-max md:min-w-[500px] shadow-lg text-sm p-6 text-gray-800 rounded-lg">
       <h3 className={`font-semibold ${color} text-2xl`}>
         {renderPhase()} Phase
       </h3>
