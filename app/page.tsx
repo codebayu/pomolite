@@ -1,12 +1,12 @@
 import { ITask } from '@/common/types/task';
-import axios, { AxiosResponse } from 'axios';
 import Home from '@/modules/home';
 import Navbar from '@/common/components/layouts/Navbar';
 import React from 'react';
+import prisma from '@/common/libs/prisma';
 
 // SSR
 export default async function HomePage() {
-  const { data } = await getTask();
+  const data = await getTask();
   return (
     <>
       <Navbar />
@@ -18,14 +18,7 @@ export default async function HomePage() {
 }
 
 // Server Fetching
-async function getTask(): Promise<{ status: number; data: ITask[] }> {
-  const url =
-    process.env.NODE_ENV === 'development'
-      ? `${process.env.BASE_URL}/api/tasks`
-      : '/api/task';
-  const response: AxiosResponse = await axios.get(url);
-  return {
-    status: response.status,
-    data: response.data.data,
-  };
+async function getTask(): Promise<ITask[]> {
+  const response = await prisma.task.findMany();
+  return response;
 }
