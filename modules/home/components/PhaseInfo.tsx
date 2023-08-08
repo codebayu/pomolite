@@ -7,6 +7,13 @@ import Loader from './Loader';
 export default function PhaseInfo() {
   const { status, phase, timer } = useTimer();
 
+  const color =
+    status === 'focus'
+      ? 'text-focus'
+      : status === 'shortBreak'
+      ? 'text-shortBreak'
+      : 'text-longBreak';
+
   function renderPhase() {
     switch (phase) {
       case 1:
@@ -61,7 +68,7 @@ export default function PhaseInfo() {
 
   return (
     <div className="bg-white flex flex-col w-full md:w-max md:min-w-[500px] shadow-lg bg-opacity-80 text-sm p-6 text-gray-500 rounded-lg">
-      <h3 className={`font-semibold text-${status} text-2xl`}>
+      <h3 className={`font-semibold ${color} text-2xl`}>
         {renderPhase()} Phase
       </h3>
       <p>

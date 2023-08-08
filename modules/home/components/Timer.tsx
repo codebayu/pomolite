@@ -24,6 +24,13 @@ export default function Timer() {
     phase,
   } = state;
 
+  const color =
+    status === 'focus'
+      ? 'text-focus'
+      : status === 'shortBreak'
+      ? 'text-shortBreak'
+      : 'text-longBreak';
+
   function setTimer() {
     const baseValue =
       status === 'focus'
@@ -201,7 +208,7 @@ export default function Timer() {
         </button>
         <button
           onClick={handlePause}
-          className={`bg-white text-${status} min-w-[200px] px-16 py-2 rounded-md font-semibold text-lg border-b-4 border-gray-300 hover:shadow-lg hover:scale-105 transition-all duration-100 ease-in-out`}
+          className={`bg-white ${color} min-w-[200px] px-16 py-2 rounded-md font-semibold text-lg border-b-4 border-gray-300 hover:shadow-lg hover:scale-105 transition-all duration-100 ease-in-out`}
         >
           {timer.pause ? 'Start' : 'Pause'}
         </button>
