@@ -8,7 +8,7 @@ export const POST = async (request: Request) => {
     data: {
       title: body.title,
       content: body.content,
-      authorId: body.authorId,
+      userId: body.userId,
     },
   });
   return NextResponse.json(task, { status: 201 });
