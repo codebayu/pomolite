@@ -5,6 +5,7 @@ import React from 'react';
 import Timer from './Timer';
 import PhaseInfo from './PhaseInfo';
 import { useTimer } from '@/store/timer';
+import Task from './Task';
 
 // View Only
 export default function Home({ tasks }: { tasks: ITask[] }) {
@@ -21,6 +22,7 @@ export default function Home({ tasks }: { tasks: ITask[] }) {
     >
       <Timer />
       <PhaseInfo />
+      <Task tasks={tasks} />
     </section>
   );
 }

@@ -1,8 +1,7 @@
-import { ITask } from '@/common/types/task';
 import Home from '@/modules/home';
 import Navbar from '@/common/components/layouts/Navbar';
 import React from 'react';
-import prisma from '@/common/libs/prisma';
+import { getTask } from '@/services/tasks';
 
 // SSR
 export default async function HomePage() {
@@ -15,10 +14,4 @@ export default async function HomePage() {
       </main>
     </>
   );
-}
-
-// Server Fetching
-async function getTask(): Promise<ITask[]> {
-  const response = await prisma.task.findMany();
-  return response;
 }
