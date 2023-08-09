@@ -1,12 +1,14 @@
-import { ITask } from '@/common/types/task';
 import Home from '@/modules/home';
 import Navbar from '@/common/components/layouts/Navbar';
 import React from 'react';
-import prisma from '@/common/libs/prisma';
+import { prisma } from '@/common/libs/prisma';
+import { ITask } from '@/common/types/task';
+import { getServerSession } from 'next-auth/next';
 
-// SSR
+// Server Component
 export default async function HomePage() {
   const data = await getTask();
+  const session = await getServerSession();
   return (
     <>
       <Navbar />
