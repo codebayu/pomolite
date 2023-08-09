@@ -11,5 +11,5 @@ export const POST = async (request: Request) => {
       authorId: body.authorId,
     },
   });
-  return NextResponse.json(task);
+  return NextResponse.json(task, { status: 201 });
 };

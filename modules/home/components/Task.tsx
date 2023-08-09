@@ -9,17 +9,12 @@ const TaskFormCollapse = dynamic(() => import('./TaskFormCollapse'));
 export default function Task({ tasks }: { tasks: ITask[] }) {
   const [openCollapse, setOpenCollapse] = useState(false);
 
-  async function toggleCollapse() {
+  function toggleCollapse() {
     setOpenCollapse(!openCollapse);
   }
 
   return (
-    <div className="flex flex-col space-y-4">
-      <div className="flex flex-col space-y-2">
-        {tasks.map((task) => (
-          <TaskItem key={task.id} task={task} />
-        ))}
-      </div>
+    <div className="flex flex-col space-y-4 w-full md:w-max md:min-w-[500px]">
       {openCollapse ? (
         <TaskFormCollapse closeCollapse={toggleCollapse} />
       ) : (
@@ -31,6 +26,11 @@ export default function Task({ tasks }: { tasks: ITask[] }) {
           <span>Add Task</span>
         </button>
       )}
+      <div className="flex flex-col space-y-2">
+        {tasks.map((task) => (
+          <TaskItem key={task.id} task={task} />
+        ))}
+      </div>
     </div>
   );
 }

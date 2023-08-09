@@ -1,9 +1,10 @@
 import Home from '@/modules/home';
 import Navbar from '@/common/components/layouts/Navbar';
 import React from 'react';
-import { getTask } from '@/services/tasks';
+import { prisma } from '@/common/libs/prisma';
+import { ITask } from '@/common/types/task';
 
-// SSR
+// Server Component
 export default async function HomePage() {
   const data = await getTask();
   return (
@@ -14,4 +15,10 @@ export default async function HomePage() {
       </main>
     </>
   );
+}
+
+// Server Fetching
+async function getTask(): Promise<ITask[]> {
+  const response = await prisma.task.findMany();
+  return response;
 }
