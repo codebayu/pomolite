@@ -23,7 +23,7 @@ export default function TaskFormCollapse(props: TaskFormCollapseProps) {
 
   async function handleCreate(e: FormEvent) {
     e.preventDefault();
-    await axios.post('/api/task', { title, content, userId: 1 });
+    await axios.post('/api/task', { title, content });
     closeCollapse();
     router.refresh();
     setTitle('');
