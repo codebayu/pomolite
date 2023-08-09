@@ -24,13 +24,15 @@ export default async function Navbar() {
       ) : (
         <div className="flex items-center justify-center space-x-2">
           <span className="text-sm font-semibold">{session.user.name}</span>
-          <Image
-            src={session.user.image ?? ''}
-            alt={session.user.name ?? ''}
-            width={40}
-            height={40}
-            className="rounded-full"
-          />
+          {session.user.image && (
+            <Image
+              src={session.user.image}
+              alt={session.user.image}
+              width={40}
+              height={40}
+              className="rounded-full"
+            />
+          )}
         </div>
       )}
     </header>
