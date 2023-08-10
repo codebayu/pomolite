@@ -4,4 +4,5 @@ export interface ITask {
   content: string | null;
   userId: string;
   createdAt: Date;
+  isDone: boolean;
 }

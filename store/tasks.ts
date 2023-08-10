@@ -4,10 +4,12 @@ import { devtools, persist } from 'zustand/middleware';
 
 export interface InitialAuthState {
   localTask: ITask[];
+  activeTask: number | null;
   addNewTask(task: ITask): void;
   updateTask(id: number, updatedTask: ITask): void;
   deleteTask(id: number): void;
-  //   setLocalTasks(tasks: ITask[]): void;
+  setActiveTask(id: number): void;
+  setTaskDone(id: number): void;
 }
 
 export const useTasks = create<InitialAuthState>()(
@@ -15,24 +17,29 @@ export const useTasks = create<InitialAuthState>()(
     persist(
       (set) => ({
         localTask: [] as ITask[],
+        activeTask: null,
         addNewTask: (newTask: ITask) =>
           set((state) => ({
-            ...state,
             localTask: [newTask, ...state.localTask],
+            activeTask:
+              state.localTask.length > 0 ? state.activeTask : newTask.id,
           })),
-        // setLocalTasks: (newTask: ITask[]) => set({ localTask: newTask }),
         updateTask: (id: number, updatedTask: ITask) =>
           set((state) => ({
-            ...state,
             localTask: state.localTask.map((task) => {
-              console.log(updatedTask);
               return task.id === id ? { ...task, ...updatedTask } : task;
             }),
           })),
         deleteTask: (id: number) =>
           set((state) => ({
-            ...state,
             localTask: state.localTask.filter((task) => task.id !== id),
+          })),
+        setActiveTask: (id: number) => set(() => ({ activeTask: id })),
+        setTaskDone: (id: number) =>
+          set((state) => ({
+            localTask: state.localTask.map((task) =>
+              task.id === id ? { ...task, isDone: true } : task
+            ),
           })),
       }),
       {

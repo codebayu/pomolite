@@ -9,8 +9,10 @@ import {
   IconRefreshDot,
 } from '@tabler/icons-react';
 import { playSound } from '@/common/libs/function';
+import { useTasks } from '@/store/tasks';
 
 export default function Timer() {
+  const { setTaskDone, activeTask } = useTasks();
   const state = useTimer();
   const {
     focus,
@@ -171,6 +173,7 @@ export default function Timer() {
           },
           phase: 1,
         });
+        activeTask && setTaskDone(activeTask);
       } else {
         playSound('alarm');
         setTimerState({
