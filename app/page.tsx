@@ -32,6 +32,7 @@ async function getTask(): Promise<ITask[]> {
 
   const response = await prisma.task.findMany({
     where: { userId: prismaUser?.id },
+    orderBy: { createdAt: 'desc' },
   });
   return response;
 }
