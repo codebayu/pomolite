@@ -1,4 +1,4 @@
-import { uuid } from 'uuidv4';
+import { v4 as uuidv4 } from 'uuid';
 
 type SoundType = 'alarm' | 'click';
 
@@ -9,5 +9,13 @@ export const playSound = (type: SoundType) => {
 };
 
 export const generateUUID = () => {
-  return uuid();
+  return uuidv4();
+};
+
+export const generateIdNumber = () => {
+  const length = 8;
+  const min = Math.pow(10, length - 1);
+  const max = Math.pow(10, length) - 1;
+
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 };
