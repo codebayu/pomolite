@@ -1,9 +1,12 @@
 import InputField from '@/common/components/form/InputField';
+import { generateIdNumber, generateUUID } from '@/common/libs/function';
 import { ITask } from '@/common/types/task';
+import { useAuth } from '@/store/auth';
+import { useTasks } from '@/store/tasks';
 import axios from 'axios';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 
 interface TaskFormCollapseProps {
   closeCollapse(): void;
@@ -16,14 +19,26 @@ export default function TaskFormCollapse(props: TaskFormCollapseProps) {
   const { closeCollapse, defaultValue } = props;
   const [title, setTitle] = useState(defaultValue?.title ?? '');
   const [content, setContent] = useState(defaultValue?.content ?? '');
-  const router = useRouter();
-  const isEdit = Object.keys(defaultValue || {}).length !== 0;
-
   const [collapseNote, setCollapseNote] = useState(false);
+  const router = useRouter();
+  const { isLoggedIn } = useAuth();
+  const { addNewTask, updateTask, deleteTask } = useTasks();
+  const isEdit = Object.keys(defaultValue || {}).length !== 0;
 
   async function handleCreate(e: FormEvent) {
     e.preventDefault();
-    await axios.post('/api/task', { title, content });
+    const data: ITask = {
+      id: generateIdNumber(),
+      title,
+      content,
+      createdAt: new Date(),
+      userId: localStorage.getItem('user') as string,
+    };
+    if (isLoggedIn) {
+      await axios.post('/api/task', { title, content });
+    } else {
+      addNewTask(data);
+    }
     closeCollapse();
     router.refresh();
     setTitle('');
@@ -32,7 +47,12 @@ export default function TaskFormCollapse(props: TaskFormCollapseProps) {
 
   async function handleUpdate(e: FormEvent) {
     e.preventDefault();
-    await axios.patch(`/api/task/${defaultValue?.id}`, { title, content });
+    if (!defaultValue) return;
+    if (isLoggedIn) {
+      await axios.patch(`/api/task/${defaultValue?.id}`, { title, content });
+    } else {
+      updateTask(defaultValue?.id, { ...defaultValue, title, content });
+    }
     closeCollapse();
     router.refresh();
     setTitle('');
@@ -41,7 +61,12 @@ export default function TaskFormCollapse(props: TaskFormCollapseProps) {
 
   async function handleDelete(e: FormEvent) {
     e.preventDefault();
-    await axios.delete(`/api/task/${defaultValue?.id}`);
+    if (!defaultValue) return;
+    if (isLoggedIn) {
+      await axios.delete(`/api/task/${defaultValue?.id}`);
+    } else {
+      deleteTask(defaultValue.id);
+    }
     closeCollapse();
     router.refresh();
   }

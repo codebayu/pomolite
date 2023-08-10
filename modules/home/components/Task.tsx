@@ -3,11 +3,14 @@ import React, { useState } from 'react';
 import TaskItem from './TaskItem';
 import { IconCirclePlus } from '@tabler/icons-react';
 import dynamic from 'next/dynamic';
+import { useHydration } from '@/hooks/useHydration';
+import { useTasks } from '@/store/tasks';
 
 const TaskFormCollapse = dynamic(() => import('./TaskFormCollapse'));
 
 export default function Task({ tasks }: { tasks: ITask[] }) {
   const [openCollapse, setOpenCollapse] = useState(false);
+  const hydrate = useHydration(useTasks);
 
   function toggleCollapse() {
     setOpenCollapse(!openCollapse);
@@ -27,9 +30,7 @@ export default function Task({ tasks }: { tasks: ITask[] }) {
         </button>
       )}
       <div className="flex flex-col space-y-2">
-        {tasks.map((task) => (
-          <TaskItem key={task.id} task={task} />
-        ))}
+        {hydrate && tasks.map((task) => <TaskItem key={task.id} task={task} />)}
       </div>
     </div>
   );
