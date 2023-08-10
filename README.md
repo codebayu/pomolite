@@ -1,4 +1,15 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Pomolite - Pomodoro Technique 🚀
+
+### [Pomolite Demo](https://pomolite.vercel.app/)
+
+Hi! Improve your productivity and focus to the next level with Pomolite, the ultimate Pomodoro Timer designed to supercharge your work sessions. Inspired by the time-tested Pomodoro Technique specifically [pomofocus.io](https://pomofocus.io/), this website empowers you to achieve more by harnessing the science of focused intervals.
+This is a [Next.js App Router](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app), [`railway`](https://railway.app/), [`postgresql`](https://www.postgresql.org/), [`prisma`](https://www.prisma.io/), [`tailwind`](https://tailwindcss.com/), and [`zustand`](https://zustand-demo.pmnd.rs/).
+
+## Preview
+Checkout this amazing website [here!](https://pomolite.vercel.app/)
+
+<img width="1440" alt="pomolite-demo" src="https://github.com/Bayusetiawan45/pomolite/assets/99315255/82553382-57dd-4bfb-9492-232ab640e349">
+
 
 ## Getting Started
 
