@@ -10,9 +10,14 @@ import {
 } from '@tabler/icons-react';
 import { playSound } from '@/common/libs/function';
 import { useTasks } from '@/store/tasks';
+import axios from 'axios';
+import { useAuth } from '@/store/auth';
+import { useRouter } from 'next/navigation';
 
 export default function Timer() {
-  const { setTaskDone, activeTask } = useTasks();
+  const { activeTask, setIncrementPomos } = useTasks();
+  const { isLoggedIn } = useAuth();
+  const router = useRouter();
   const state = useTimer();
   const {
     focus,
@@ -24,6 +29,7 @@ export default function Timer() {
     timer,
     setTimerState,
     phase,
+    setPauseTimer,
   } = state;
 
   const color =
@@ -55,13 +61,7 @@ export default function Timer() {
 
   function handlePause() {
     playSound('click');
-    setTimerState({
-      ...state,
-      timer: {
-        ...state.timer,
-        pause: !state.timer.pause,
-      },
-    });
+    setPauseTimer();
   }
 
   function handleNext() {
@@ -98,6 +98,17 @@ export default function Timer() {
         return 'Short Break';
       default:
         return 'Focus';
+    }
+  }
+
+  async function updateTotalPomos() {
+    if (isLoggedIn) {
+      await axios.patch(`/api/task/${activeTask}`, {
+        totalPomos: { increment: 1 },
+      });
+      router.refresh();
+    } else {
+      setIncrementPomos(activeTask as number);
     }
   }
 
@@ -147,6 +158,7 @@ export default function Timer() {
             seconds: 0,
           },
         });
+        updateTotalPomos();
       } else if (state.status === 'shortBreak') {
         playSound('alarm');
         setTimerState({
@@ -173,7 +185,6 @@ export default function Timer() {
           },
           phase: 1,
         });
-        activeTask && setTaskDone(activeTask);
       } else {
         playSound('alarm');
         setTimerState({
@@ -194,16 +205,10 @@ export default function Timer() {
   return (
     <div className="flex flex-col w-full md:w-max md:min-w-[500px] border border-gray-300 shadow-md space-y-10 items-center justify-center p-6 rounded-lg">
       <span>{renderStatus()} Session</span>
-      <h2 className="text-8xl font-bold">
-        {'    '}
-        {state.timer.minutes < 10
-          ? '0' + state.timer.minutes
-          : state.timer.minutes}
-        {''}:{''}
-        {state.timer.seconds < 10
-          ? '0' + state.timer.seconds
-          : state.timer.seconds}
-        {'    '}
+      <h2 className="text-8xl font-bold min-w-[290px] flex ">
+        {state.timer.minutes < 10 ? '0' : ''}
+        {state.timer.minutes}:{state.timer.seconds < 10 ? '0' : ''}
+        {state.timer.seconds}
       </h2>
       <div className="flex w-full justify-around">
         <button className="opacity-0" aria-label="prev-button">

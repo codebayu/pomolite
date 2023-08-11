@@ -1,12 +1,13 @@
+import Button from '@/common/components/button';
 import InputField from '@/common/components/form/InputField';
-import { generateIdNumber, generateUUID } from '@/common/libs/function';
+import { generateIdNumber } from '@/common/libs/function';
 import { ITask } from '@/common/types/task';
 import { useAuth } from '@/store/auth';
 import { useTasks } from '@/store/tasks';
 import axios from 'axios';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
-import React, { FormEvent, useEffect, useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 
 interface TaskFormCollapseProps {
   closeCollapse(): void;
@@ -34,6 +35,7 @@ export default function TaskFormCollapse(props: TaskFormCollapseProps) {
       createdAt: new Date(),
       userId: localStorage.getItem('user') as string,
       isDone: false,
+      totalPomos: 0,
     };
     if (isLoggedIn) {
       await axios.post('/api/task', { title, content });
@@ -105,28 +107,17 @@ export default function TaskFormCollapse(props: TaskFormCollapseProps) {
         } space-x-8 text-sm bg-gray-100 py-2 px-6`}
       >
         {isEdit && (
-          <button
-            type="reset"
-            className="font-semibold text-gray-500"
-            onClick={handleDelete}
-          >
+          <Button theme="outlined" type="reset" onClick={handleDelete}>
             Delete
-          </button>
+          </Button>
         )}
         <div className="flex space-x-8">
-          <button
-            type="reset"
-            className="font-semibold text-gray-500"
-            onClick={closeCollapse}
-          >
+          <Button theme="outlined" type="reset" onClick={closeCollapse}>
             Cancel
-          </button>
-          <button
-            type="submit"
-            className="text-white bg-gray-700 px-4 py-2 rounded-lg hover:shadow-md hover:bg-gray-800"
-          >
+          </Button>
+          <Button theme="filled" type="submit">
             Save
-          </button>
+          </Button>
         </div>
       </div>
     </form>

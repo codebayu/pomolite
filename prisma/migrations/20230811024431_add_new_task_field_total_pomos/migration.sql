@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Task" ADD COLUMN     "totalPomos" INTEGER NOT NULL DEFAULT 0;
