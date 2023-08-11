@@ -14,6 +14,7 @@ export interface InitialTimerState {
   base: number;
   percentage: number;
   setTimerState(newState: InitialTimerState): void;
+  setPauseTimer(): void;
 }
 
 export const useTimer = create<InitialTimerState>()((set) => ({
@@ -37,4 +38,12 @@ export const useTimer = create<InitialTimerState>()((set) => ({
       ...state,
       ...newState,
     })),
+  setPauseTimer() {
+    set((state) => ({
+      timer: {
+        ...state.timer,
+        pause: !state.timer.pause,
+      },
+    }));
+  },
 }));

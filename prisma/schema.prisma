@@ -29,13 +29,14 @@ model User {
 }
 
 model Task {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String?
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
-  createdAt DateTime @default(now())
-  isDone    Boolean  @default(false)
+  id         Int      @id @default(autoincrement())
+  title      String
+  content    String?
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  createdAt  DateTime @default(now())
+  isDone     Boolean  @default(false)
+  totalPomos Int      @default(0)
 }
 
 model Account {

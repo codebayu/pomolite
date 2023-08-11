@@ -2,7 +2,7 @@
 'use client';
 
 import { ITask } from '@/common/types/task';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Timer from './Timer';
 import PhaseInfo from './PhaseInfo';
 import { useTimer } from '@/store/timer';

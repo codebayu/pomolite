@@ -20,6 +20,8 @@ export const POST = async (request: Request) => {
       title: body.title,
       content: body.content,
       userId: prismaUser.id,
+      isDone: body.isDone,
+      totalPomos: body.totalPomos,
     },
   });
   return NextResponse.json(task, { status: 201 });
