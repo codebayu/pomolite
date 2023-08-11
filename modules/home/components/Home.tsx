@@ -11,6 +11,7 @@ import { ISession } from '@/common/types/auth';
 import { useAuth } from '@/store/auth';
 import { generateUUID } from '@/common/libs/function';
 import { useTasks } from '@/store/tasks';
+import InfoSection from './InfoSection';
 
 interface HomeProps {
   tasks: ITask[];
@@ -42,12 +43,15 @@ export default function Home({ tasks, session }: HomeProps) {
   }, []);
 
   return (
-    <section
-      className={`flex flex-col items-center p-2 space-y-6 transition-all ease-in-out duration-300 ${bg} text-white pt-20 w-full min-h-screen`}
-    >
-      <Timer />
-      <PhaseInfo />
-      <Task tasks={!session ? localTask : tasks} />
-    </section>
+    <>
+      <section
+        className={`flex flex-col items-center p-2 space-y-6 transition-all ease-in-out duration-300 ${bg} text-white py-20 w-full min-h-screen`}
+      >
+        <Timer />
+        <PhaseInfo />
+        <Task tasks={!session ? localTask : tasks} />
+      </section>
+      <InfoSection />
+    </>
   );
 }
