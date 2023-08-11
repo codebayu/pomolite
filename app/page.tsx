@@ -5,6 +5,7 @@ import { prisma } from '@/common/libs/prisma';
 import { ITask } from '@/common/types/task';
 import { getServerSession } from 'next-auth/next';
 import { ISession } from '@/common/types/auth';
+import Footer from '@/common/components/layouts/Footer';
 
 // Server Component
 export default async function HomePage() {
@@ -16,6 +17,7 @@ export default async function HomePage() {
       <main className="flex flex-col min-h-screen items-center justify-between">
         <Home tasks={data} session={session} />
       </main>
+      <Footer />
     </>
   );
 }
