@@ -67,6 +67,7 @@ export default function Timer() {
   function handleNext() {
     if (state.status === 'focus' && state.phase < 4) {
       setTimerState({ ...state, status: 'shortBreak' });
+      updateTotalPomos();
     } else if (state.status === 'shortBreak' && state.phase < 4) {
       setTimerState({
         ...state,
