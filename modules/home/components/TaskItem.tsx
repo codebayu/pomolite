@@ -5,10 +5,16 @@ import TaskFormCollapse from './TaskFormCollapse';
 import { useTasks } from '@/store/tasks';
 import useGlobalModal from '@/hooks/useModal';
 import { useTimer } from '@/store/timer';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/store/auth';
+import axios from 'axios';
 
 export default function TaskItem({ task }: { task: ITask }) {
   const [collapseEdit, setCollapseEdit] = useState(false);
-  const { setActiveTask, setWillActiveTask, activeTask } = useTasks();
+  const router = useRouter();
+  const { isLoggedIn } = useAuth();
+  const { setActiveTask, setWillActiveTask, activeTask, setTaskDone } =
+    useTasks();
   const state = useTimer();
   const { status, timer, setPauseTimer } = state;
   const { openModal } = useGlobalModal();
@@ -27,6 +33,19 @@ export default function TaskItem({ task }: { task: ITask }) {
     }
   }
 
+  async function handleMarkDone(id: number) {
+    if (isLoggedIn) {
+      const response = await axios.get(`/api/task/${id}`);
+      const currentStatus = response.data.isDone;
+      await axios.patch(`/api/task/${id}`, {
+        isDone: !currentStatus,
+      });
+      router.refresh();
+    } else {
+      setTaskDone(id);
+    }
+  }
+
   return (
     <>
       {collapseEdit ? (
@@ -35,19 +54,30 @@ export default function TaskItem({ task }: { task: ITask }) {
         <div
           key={task.id}
           className={`w-full flex justify-between border-l-8 ${
-            activeTask === task.id ? 'border-black' : 'border-gray-300'
+            activeTask === task.id ? 'border-black' : 'border-white'
           } items-center cursor-pointer bg-white text-gray-700 font-semibold shadow-md md:w-max md:min-w-[500px] rounded-lg`}
         >
-          <div className="flex w-full items-center justify-between">
-            <div className="flex space-x-1 p-4" onClick={handleClickTaskItem}>
-              <IconCircleCheckFilled
-                className={`${
-                  task.isDone ? 'text-green-600' : 'text-gray-400'
-                }`}
-              />
-              <h4>{task.title}</h4>
-            </div>
-            <span className="text-xs text-gray-600 font-normal">9 Pomos</span>
+          <IconCircleCheckFilled
+            size={35}
+            className={`${
+              task.isDone
+                ? 'text-red-600 hover:text-green-700'
+                : 'text-gray-400 hover:text-gray-500 '
+            } mx-2`}
+            onClick={() => handleMarkDone(task.id)}
+          />
+          <div
+            className="flex w-full items-center justify-between py-4"
+            onClick={handleClickTaskItem}
+          >
+            <h4
+              className={`${task.isDone ? 'line-through text-gray-500' : ''}`}
+            >
+              {task.title}
+            </h4>
+            <span className="text-xs text-gray-600 font-normal">
+              {task.totalPomos} Pomos
+            </span>
           </div>
           <div
             className="text-gray-400 rounded-md  p-4 cursor-pointer hover:bg-gray-100"

@@ -10,9 +10,14 @@ import {
 } from '@tabler/icons-react';
 import { playSound } from '@/common/libs/function';
 import { useTasks } from '@/store/tasks';
+import axios from 'axios';
+import { useAuth } from '@/store/auth';
+import { useRouter } from 'next/navigation';
 
 export default function Timer() {
-  const { setTaskDone, activeTask } = useTasks();
+  const { activeTask, setIncrementPomos } = useTasks();
+  const { isLoggedIn } = useAuth();
+  const router = useRouter();
   const state = useTimer();
   const {
     focus,
@@ -96,6 +101,17 @@ export default function Timer() {
     }
   }
 
+  async function updateTotalPomos() {
+    if (isLoggedIn) {
+      await axios.patch(`/api/task/${activeTask}`, {
+        totalPomos: { increment: 1 },
+      });
+      router.refresh();
+    } else {
+      setIncrementPomos(activeTask as number);
+    }
+  }
+
   useEffect(() => {
     setTimer();
   }, [state.status, focus, longBreak, replay, shortBreak, speed]);
@@ -142,6 +158,7 @@ export default function Timer() {
             seconds: 0,
           },
         });
+        updateTotalPomos();
       } else if (state.status === 'shortBreak') {
         playSound('alarm');
         setTimerState({
@@ -168,7 +185,6 @@ export default function Timer() {
           },
           phase: 1,
         });
-        activeTask && setTaskDone(activeTask);
       } else {
         playSound('alarm');
         setTimerState({

@@ -35,6 +35,7 @@ export default function TaskFormCollapse(props: TaskFormCollapseProps) {
       createdAt: new Date(),
       userId: localStorage.getItem('user') as string,
       isDone: false,
+      totalPomos: 0,
     };
     if (isLoggedIn) {
       await axios.post('/api/task', { title, content });

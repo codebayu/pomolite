@@ -12,6 +12,7 @@ export interface InitialAuthState {
   setActiveTask(id: number): void;
   setWillActiveTask(id: number): void;
   setTaskDone(id: number): void;
+  setIncrementPomos(id: number): void;
 }
 
 export const useTasks = create<InitialAuthState>()(
@@ -42,7 +43,15 @@ export const useTasks = create<InitialAuthState>()(
         setTaskDone: (id: number) =>
           set((state) => ({
             localTask: state.localTask.map((task) =>
-              task.id === id ? { ...task, isDone: true } : task
+              task.id === id ? { ...task, isDone: !task.isDone } : task
+            ),
+          })),
+        setIncrementPomos: (id: number) =>
+          set((state) => ({
+            localTask: state.localTask.map((task) =>
+              task.id === id
+                ? { ...task, totalPomos: task.totalPomos + 1 }
+                : task
             ),
           })),
       }),

@@ -5,4 +5,5 @@ export interface ITask {
   userId: string;
   createdAt: Date;
   isDone: boolean;
+  totalPomos: number;
 }

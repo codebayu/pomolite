@@ -18,7 +18,7 @@ export interface InitialTimerState {
 }
 
 export const useTimer = create<InitialTimerState>()((set) => ({
-  focus: 25,
+  focus: 1,
   shortBreak: 5,
   longBreak: 15,
   replay: 4,
