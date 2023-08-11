@@ -11,13 +11,14 @@ import axios from 'axios';
 
 export default function TaskItem({ task }: { task: ITask }) {
   const [collapseEdit, setCollapseEdit] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { isLoggedIn } = useAuth();
   const { setActiveTask, setWillActiveTask, activeTask, setTaskDone } =
     useTasks();
+  const { openModal } = useGlobalModal();
   const state = useTimer();
   const { status, timer, setPauseTimer } = state;
-  const { openModal } = useGlobalModal();
 
   function toggleCollapse() {
     setCollapseEdit(!collapseEdit);
@@ -34,6 +35,7 @@ export default function TaskItem({ task }: { task: ITask }) {
   }
 
   async function handleMarkDone(id: number) {
+    setLoading(true);
     if (isLoggedIn) {
       const response = await axios.get(`/api/task/${id}`);
       const currentStatus = response.data.isDone;
@@ -44,6 +46,7 @@ export default function TaskItem({ task }: { task: ITask }) {
     } else {
       setTaskDone(id);
     }
+    setLoading(false);
   }
 
   return (
@@ -57,17 +60,23 @@ export default function TaskItem({ task }: { task: ITask }) {
             activeTask === task.id ? 'border-black' : 'border-white'
           } items-center cursor-pointer bg-white text-gray-700 font-semibold shadow-md md:w-max md:min-w-[500px] rounded-lg`}
         >
-          <IconCircleCheckFilled
-            size={35}
-            className={`${
-              task.isDone
-                ? 'text-red-600 hover:text-green-700'
-                : 'text-gray-400 hover:text-gray-500 '
-            } mx-2`}
+          <button
+            disabled={loading}
+            className={`${loading ? 'cursor-not-allowed' : 'cursor-pointer'}`}
             onClick={() => handleMarkDone(task.id)}
-          />
+          >
+            <IconCircleCheckFilled
+              size={35}
+              className={`${
+                task.isDone
+                  ? 'text-red-600 hover:text-red-700'
+                  : 'text-gray-400 hover:text-gray-500 '
+              } mx-2`}
+            />
+          </button>
+
           <div
-            className="flex w-full items-center justify-between py-4"
+            className="flex w-full items-center justify-between py-4 mr-2"
             onClick={handleClickTaskItem}
           >
             <h4
