@@ -24,6 +24,7 @@ export default function Timer() {
     timer,
     setTimerState,
     phase,
+    setPauseTimer,
   } = state;
 
   const color =
@@ -55,13 +56,7 @@ export default function Timer() {
 
   function handlePause() {
     playSound('click');
-    setTimerState({
-      ...state,
-      timer: {
-        ...state.timer,
-        pause: !state.timer.pause,
-      },
-    });
+    setPauseTimer();
   }
 
   function handleNext() {
@@ -194,16 +189,10 @@ export default function Timer() {
   return (
     <div className="flex flex-col w-full md:w-max md:min-w-[500px] border border-gray-300 shadow-md space-y-10 items-center justify-center p-6 rounded-lg">
       <span>{renderStatus()} Session</span>
-      <h2 className="text-8xl font-bold">
-        {'    '}
-        {state.timer.minutes < 10
-          ? '0' + state.timer.minutes
-          : state.timer.minutes}
-        {''}:{''}
-        {state.timer.seconds < 10
-          ? '0' + state.timer.seconds
-          : state.timer.seconds}
-        {'    '}
+      <h2 className="text-8xl font-bold min-w-[290px] flex ">
+        {state.timer.minutes < 10 ? '0' : ''}
+        {state.timer.minutes}:{state.timer.seconds < 10 ? '0' : ''}
+        {state.timer.seconds}
       </h2>
       <div className="flex w-full justify-around">
         <button className="opacity-0" aria-label="prev-button">

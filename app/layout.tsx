@@ -1,8 +1,10 @@
 import './globals.css';
 import type { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 import { Inter } from 'next/font/google';
 
 const inter = Inter({ subsets: ['latin'] });
+const Modal = dynamic(() => import('@/common/components/modal/index'));
 
 export const metadata: Metadata = {
   title: 'Pomolite',
@@ -20,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body suppressHydrationWarning={true} className={inter.className}>
+        <Modal />
         {children}
       </body>
     </html>

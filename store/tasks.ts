@@ -5,10 +5,12 @@ import { devtools, persist } from 'zustand/middleware';
 export interface InitialAuthState {
   localTask: ITask[];
   activeTask: number | null;
+  willActiveTask: number | null;
   addNewTask(task: ITask): void;
   updateTask(id: number, updatedTask: ITask): void;
   deleteTask(id: number): void;
   setActiveTask(id: number): void;
+  setWillActiveTask(id: number): void;
   setTaskDone(id: number): void;
 }
 
@@ -18,6 +20,7 @@ export const useTasks = create<InitialAuthState>()(
       (set) => ({
         localTask: [] as ITask[],
         activeTask: null,
+        willActiveTask: null,
         addNewTask: (newTask: ITask) =>
           set((state) => ({
             localTask: [newTask, ...state.localTask],
@@ -35,6 +38,7 @@ export const useTasks = create<InitialAuthState>()(
             localTask: state.localTask.filter((task) => task.id !== id),
           })),
         setActiveTask: (id: number) => set(() => ({ activeTask: id })),
+        setWillActiveTask: (id: number) => set(() => ({ willActiveTask: id })),
         setTaskDone: (id: number) =>
           set((state) => ({
             localTask: state.localTask.map((task) =>
