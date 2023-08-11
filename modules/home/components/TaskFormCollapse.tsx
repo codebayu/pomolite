@@ -21,6 +21,7 @@ export default function TaskFormCollapse(props: TaskFormCollapseProps) {
   const [title, setTitle] = useState(defaultValue?.title ?? '');
   const [content, setContent] = useState(defaultValue?.content ?? '');
   const [collapseNote, setCollapseNote] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { isLoggedIn } = useAuth();
   const { addNewTask, updateTask, deleteTask } = useTasks();
@@ -28,6 +29,7 @@ export default function TaskFormCollapse(props: TaskFormCollapseProps) {
 
   async function handleCreate(e: FormEvent) {
     e.preventDefault();
+    setLoading(true);
     const data: ITask = {
       id: generateIdNumber(),
       title,
@@ -37,11 +39,13 @@ export default function TaskFormCollapse(props: TaskFormCollapseProps) {
       isDone: false,
       totalPomos: 0,
     };
+    if (!title) return;
     if (isLoggedIn) {
       await axios.post('/api/task', { title, content });
     } else {
       addNewTask(data);
     }
+    setLoading(false);
     closeCollapse();
     router.refresh();
     setTitle('');
@@ -50,12 +54,14 @@ export default function TaskFormCollapse(props: TaskFormCollapseProps) {
 
   async function handleUpdate(e: FormEvent) {
     e.preventDefault();
+    setLoading(true);
     if (!defaultValue) return;
     if (isLoggedIn) {
       await axios.patch(`/api/task/${defaultValue?.id}`, { title, content });
     } else {
       updateTask(defaultValue?.id, { ...defaultValue, title, content });
     }
+    setLoading(false);
     closeCollapse();
     router.refresh();
     setTitle('');
@@ -63,6 +69,7 @@ export default function TaskFormCollapse(props: TaskFormCollapseProps) {
   }
 
   async function handleDelete(e: FormEvent) {
+    setLoading(true);
     e.preventDefault();
     if (!defaultValue) return;
     if (isLoggedIn) {
@@ -70,6 +77,7 @@ export default function TaskFormCollapse(props: TaskFormCollapseProps) {
     } else {
       deleteTask(defaultValue.id);
     }
+    setLoading(false);
     closeCollapse();
     router.refresh();
   }
@@ -107,7 +115,12 @@ export default function TaskFormCollapse(props: TaskFormCollapseProps) {
         } space-x-8 text-sm bg-gray-100 py-2 px-6`}
       >
         {isEdit && (
-          <Button theme="outlined" type="reset" onClick={handleDelete}>
+          <Button
+            theme="outlined"
+            type="reset"
+            onClick={handleDelete}
+            disable={loading}
+          >
             Delete
           </Button>
         )}
@@ -115,7 +128,7 @@ export default function TaskFormCollapse(props: TaskFormCollapseProps) {
           <Button theme="outlined" type="reset" onClick={closeCollapse}>
             Cancel
           </Button>
-          <Button theme="filled" type="submit">
+          <Button theme="filled" type="submit" disable={loading}>
             Save
           </Button>
         </div>

@@ -8,7 +8,7 @@ export default async function Navbar() {
   const session = await getServerSession();
   return (
     <header
-      className={`text-white flex fixed transition-all ease-in-out duration-300 items-center justify-between w-full p-4 md:px-40 lg:px-96`}
+      className={`text-white backdrop-blur-lg flex fixed transition-all ease-in-out duration-300 items-center justify-between w-full p-4 md:px-40 lg:px-96`}
     >
       <div className="flex space-x-1 items-center">
         <IconHourglassHigh />
