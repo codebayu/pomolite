@@ -1,4 +1,3 @@
-import { Info } from '@/common/components/layouts/Info';
 import './globals.css';
 import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
@@ -33,7 +32,6 @@ export default function RootLayout({
     <html lang="en">
       <body suppressHydrationWarning={true} className={inter.className}>
         <Modal />
-        <Info />
         {children}
       </body>
     </html>
