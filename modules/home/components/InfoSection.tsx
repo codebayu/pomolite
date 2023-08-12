@@ -21,7 +21,7 @@ export default function InfoSection() {
         train your brain to work at its optimal capacity, achieving more in less
         time. See more on{' '}
         <a
-          className="text-blue-500 font-semibold"
+          className="text-blue-600 font-semibold"
           href="https://en.wikipedia.org/wiki/Pomodoro_Technique"
           target="_blank"
         >
