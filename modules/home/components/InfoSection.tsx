@@ -3,7 +3,7 @@ import React from 'react';
 export default function InfoSection() {
   return (
     <section className="flex flex-col text-justify space-y-6 w-full p-4 py-12 md:px-40 lg:px-96">
-      <h4 className="text-2xl font-semibold">
+      <h4 className="text-xl md:text-2xl font-semibold">
         Welcome to Pomolite - Elevate Your Productivity with the Power of
         Pomodoro Technique!
       </h4>
@@ -13,7 +13,9 @@ export default function InfoSection() {
         Technique-centered website is here to revolutionize the way you work and
         boost your productivity to new heights.
       </p>
-      <h5 className="text-xl font-semibold">What is the Pomodoro Technique?</h5>
+      <h5 className="text-lg md:text-xl font-semibold">
+        What is the Pomodoro Technique?
+      </h5>
       <p>
         The Pomodoro Technique is a time management method designed to enhance
         your concentration and efficiency. By breaking your work into focused
@@ -28,7 +30,7 @@ export default function InfoSection() {
           Wikipedia
         </a>
       </p>
-      <h5 className="text-xl font-semibold">
+      <h5 className="text-lg md:text-xl font-semibold">
         Why Choose Our Pomodoro Website?
       </h5>
       <p>
@@ -39,7 +41,7 @@ export default function InfoSection() {
         Postgres for robust data management, and deployed seamlessly on Vercel
         and Railway for a smooth user experience.
       </p>
-      <h5 className="text-xl font-semibold">Key Features:</h5>
+      <h5 className="text-lg md:text-xl font-semibold">Key Features:</h5>
       <ol className="flex flex-col space-y-2">
         <li>
           <strong>Intuitive Interface:</strong> Our user-friendly interface
