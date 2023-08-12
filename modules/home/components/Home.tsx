@@ -13,7 +13,6 @@ import { useTasks } from '@/store/tasks';
 import InfoSection from './InfoSection';
 import TagManager from 'react-gtm-module';
 import { generateUUID } from '@/common/libs/function';
-import Info from '@/common/components/layouts/Info';
 
 interface HomeProps {
   tasks: ITask[];
@@ -54,7 +53,6 @@ export default function Home({ tasks, session }: HomeProps) {
 
   return (
     <>
-      <Info />
       <section
         className={`flex flex-col items-center p-2 space-y-6 transition-all ease-in-out duration-300 ${bg} text-white py-20 w-full min-h-screen`}
       >
