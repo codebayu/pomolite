@@ -8,7 +8,7 @@ export default function Footer() {
         <a
           href="https://github.com/Bayusetiawan45"
           target="_blank"
-          className="text-focus"
+          style={{ color: '#CC0000' }}
         >
           Bayu Setiawan
         </a>
