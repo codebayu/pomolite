@@ -13,7 +13,7 @@ import { useTasks } from '@/store/tasks';
 import InfoSection from './InfoSection';
 import TagManager from 'react-gtm-module';
 import { generateUUID } from '@/common/libs/function';
-import { Info } from '@/common/components/layouts/Info';
+import Info from '@/common/components/layouts/Info';
 
 interface HomeProps {
   tasks: ITask[];

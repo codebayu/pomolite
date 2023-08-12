@@ -1,10 +1,8 @@
-'use client';
-
 import { IconX } from '@tabler/icons-react';
 import Link from 'next/link';
 import React, { useState } from 'react';
 
-export const Info = () => {
+export default function Info() {
   const [show, setShow] = useState(true);
 
   return (
@@ -33,4 +31,4 @@ export const Info = () => {
       </Link>
     </div>
   );
-};
+}
