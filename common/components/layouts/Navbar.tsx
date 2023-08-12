@@ -1,8 +1,8 @@
 import { IconHourglassHigh } from '@tabler/icons-react';
 import React from 'react';
 import { getServerSession } from 'next-auth';
-import Link from 'next/link';
 import Image from 'next/image';
+import LoginInfo from './LoginInfo';
 
 export default async function Navbar() {
   const session = await getServerSession();
@@ -15,21 +15,7 @@ export default async function Navbar() {
         <h1 className="font-bold text-2xl">Pomolite</h1>
       </div>
       {!session?.user ? (
-        process.env.NODE_ENV === 'development' ? (
-          <Link
-            href="/api/auth/signin"
-            className="py-1 px-3 rounded-md border border-gray-300 text-sm flex items-center hover:shadow-md hover:scale-105"
-          >
-            Login
-          </Link>
-        ) : (
-          <button
-            disabled
-            className="py-1 px-3 rounded-md border border-gray-300 text-sm flex items-center hover:shadow-md hover:scale-105"
-          >
-            Login
-          </button>
-        )
+        <LoginInfo />
       ) : (
         <div className="flex items-center justify-center space-x-2">
           <span className="text-sm font-semibold">{session.user.name}</span>
