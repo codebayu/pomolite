@@ -9,9 +9,10 @@ import { useTimer } from '@/store/timer';
 import Task from './Task';
 import { ISession } from '@/common/types/auth';
 import { useAuth } from '@/store/auth';
-import { generateUUID } from '@/common/libs/function';
 import { useTasks } from '@/store/tasks';
 import InfoSection from './InfoSection';
+import TagManager from 'react-gtm-module';
+import { generateUUID } from '@/common/libs/function';
 
 interface HomeProps {
   tasks: ITask[];
@@ -31,15 +32,23 @@ export default function Home({ tasks, session }: HomeProps) {
       ? 'bg-shortBreak'
       : 'bg-longBreak';
 
-  useEffect(() => {
+  function initializeTagManager() {
+    const GTM_ID = process.env.GTM_ID;
+    if (!GTM_ID) return;
+    TagManager.initialize({ gtmId: GTM_ID });
+  }
+
+  function initializeUserLogin() {
     const userId = localStorage.getItem('user');
     if (!userId) localStorage.setItem('user', generateUUID());
-    if (session) {
-      setSession(session);
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
+    if (!session) return setIsLoggedIn(false);
+    setSession(session);
+    setIsLoggedIn(true);
+  }
+
+  useEffect(() => {
+    initializeUserLogin();
+    initializeTagManager();
   }, []);
 
   return (
