@@ -13,6 +13,7 @@ import { useTasks } from '@/store/tasks';
 import InfoSection from './InfoSection';
 import TagManager from 'react-gtm-module';
 import { generateUUID } from '@/common/libs/function';
+import PopupInfo from '@/common/components/layouts/PopupInfo';
 
 interface HomeProps {
   tasks: ITask[];
@@ -61,6 +62,7 @@ export default function Home({ tasks, session }: HomeProps) {
         <Task tasks={!session ? localTask : tasks} />
       </section>
       <InfoSection />
+      <PopupInfo />
     </>
   );
 }
