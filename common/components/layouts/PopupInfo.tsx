@@ -1,11 +1,15 @@
-'use client';
-
 import { IconX } from '@tabler/icons-react';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-export const Info = () => {
-  const [show, setShow] = useState(true);
+export default function PopupInfo() {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShow(true);
+    }, 3000);
+  }, [show]);
 
   return (
     <div
@@ -33,4 +37,4 @@ export const Info = () => {
       </Link>
     </div>
   );
-};
+}
