@@ -1,3 +1,5 @@
+'use client';
+
 import { IconX } from '@tabler/icons-react';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
@@ -6,10 +8,14 @@ export default function PopupInfo() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => {
+    const open = setTimeout(() => {
       setShow(true);
+      console.log('trigger');
     }, 3000);
-  }, [show]);
+    return () => {
+      clearTimeout(open);
+    };
+  }, []);
 
   return (
     <div

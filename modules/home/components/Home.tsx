@@ -20,7 +20,6 @@ interface HomeProps {
   session: ISession | null;
 }
 
-// View Only
 export default function Home({ tasks, session }: HomeProps) {
   const { status } = useTimer();
   const { setIsLoggedIn, setSession } = useAuth();
